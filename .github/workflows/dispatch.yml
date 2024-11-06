@@ -1,0 +1,23 @@
+name: Repo Dispatch
+
+on:
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: test-repo-dispatch
+          client-payload: |-
+            {
+              "package": "svelte",
+              "repo": "${{ github.repository }}",
+              "owner": "${{ github.event.pull_request.head.repo.owner.login }}",
+              "branch": "${{ github.event.pull_request.head.ref }}",
+              "pr": ${{ github.event.pull_request.number }}
+            }
