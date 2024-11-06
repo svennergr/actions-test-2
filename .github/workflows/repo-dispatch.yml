@@ -1,0 +1,12 @@
+name: Test
+
+on:
+  repository_dispatch:
+    types: [test-repo-dispatch]
+
+jobs:
+  Sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo
+        run: echo "${{ github.event.client_payload.branch }}"
